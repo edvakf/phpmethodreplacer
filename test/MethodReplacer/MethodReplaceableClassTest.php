@@ -35,6 +35,21 @@ class MethodReplaceableClassTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual->getMethod('a'));
     }
 
+    // hmm.
+    public function testAddMethod_called_twice()
+    {
+        $method_name = 'a';
+        $f = function () { return 1; };
+        $class = new MethodReplaceableClass('MethodReplacer\A');
+        $actual = $class->addMethod($method_name, $f);
+
+        $f2 = function () { return 2; };
+        $actual = $class->addMethod($method_name, $f2);
+
+        $expected = $f2;
+        $this->assertSame($expected, $actual->getMethod('a'));
+    }
+
     public function testAddMethod_withInvalidArg()
     {
         $invalid_method_name = 'b';
@@ -51,6 +66,15 @@ class MethodReplaceableClassTest extends \PHPUnit_Framework_TestCase
         $class = new MethodReplaceableClass('MethodReplacer\A');
         $actual = $class->addMethod($method_name, $f)->removeMethod('a');
         $this->assertNull($actual->getMethod('a'));
+    }
+
+    // hmm
+    public function testRemoveMethod_before_addMethod()
+    {
+        $method_name = 'a';
+        $class = new MethodReplaceableClass('MethodReplacer\A');
+        $class->removeMethod('a');
+        $this->assertEquals(1, A::a());
     }
 
 }
