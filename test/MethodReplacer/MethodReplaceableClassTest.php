@@ -25,7 +25,7 @@ class MethodReplaceableClassTest extends \PHPUnit_Framework_TestCase
         $class = new MethodReplaceableClass('MethodReplacer\A');
         $actual = $class->addMethod($method_name, $f);
         $expected = $f;
-        $this->assertEquals($expected, $actual->getMethod('a'));
+        $this->assertSame($expected, $actual->getMethod('a'));
     }
 
     public function testAddMethod_withInvalidArg()
