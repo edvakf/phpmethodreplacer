@@ -18,6 +18,13 @@ class MethodReplaceableClassTest extends \PHPUnit_Framework_TestCase
         new MethodReplaceableClass($class_name);
     }
 
+    public function testGetMethod_default()
+    {
+        $method_name = 'a';
+        $class = new MethodReplaceableClass('MethodReplacer\A');
+        $this->assertNull($class->getMethod('a'), 'returns only addMethod-ed methods, otherwise null');
+    }
+
     public function testAddMethodAndGetMethod()
     {
         $method_name = 'a';
